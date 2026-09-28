@@ -19,6 +19,14 @@ Three documentation trees, split by genre and audience:
 - `docs/` - reference on how the system is shaped (file layout, update pipeline, theming, shell architecture), for anyone working on the codebase; skills link here for depth
 - `manual/` - end-user documentation for using Omarchy, published; never codebase internals
 
+# Brand
+
+Product identity lives in [`default/brand.toml`](default/brand.toml). `default/bash/brand.sh` loads it. `bin/rebrand` is the conversion tool.
+
+To rename the project, edit `[identity]`, set `[previous]` to the identity you are leaving, and run `bin/rebrand`. Dry-run is the default. `bin/rebrand --apply` rewrites filenames and text. `bin/rebrand --check` fails if the previous id remains outside `[preserve]`.
+
+`[preserve]` is the conflict list: upstream URLs, package names, and Discord channels that are not this fork. `[substitute]` is for exact strings that should move, such as this repo's clone URL. Binary files are renamed, not rewritten.
+
 # Style
 
 - In markdown documents (`plans/`, `docs/`, `manual/`), write full lines — no hard wrapping at 80 columns; break only at structural boundaries like headings and list items
