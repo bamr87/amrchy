@@ -10,6 +10,7 @@ matching guide before starting:
 - [`agents/skills/acceptance-tests.md`](agents/skills/acceptance-tests.md) - writing or running graphical acceptance tests under `test/acceptance.d/`
 - [`agents/skills/visual-verification.md`](agents/skills/visual-verification.md) - verifying any change with a visual effect in the running UI
 - [`agents/skills/migrations.md`](agents/skills/migrations.md) - creating or changing migrations under `migrations/`
+- [`agents/skills/upstream-sync.md`](agents/skills/upstream-sync.md) - syncing this fork with upstream Omarchy (`bin/upstream-sync`, `default/upstream.toml`)
 
 # Documentation Layout
 
@@ -26,6 +27,12 @@ Product identity lives in [`default/brand.toml`](default/brand.toml). `default/b
 To rename the project, edit `[identity]`, set `[previous]` to the identity you are leaving, and run `bin/rebrand`. Dry-run is the default. `bin/rebrand --apply` rewrites filenames and text. `bin/rebrand --check` fails if the previous id remains outside `[preserve]`.
 
 `[preserve]` is the conflict list: upstream URLs, package names, and Discord channels that are not this fork. `[substitute]` is for exact strings that should move, such as this repo's clone URL. Binary files are renamed, not rewritten.
+
+# Upstream sync
+
+This fork diverges from upstream Omarchy and keeps up with it. `bin/upstream-sync` merges upstream onto a sync branch (status, plan, merge, decline, check, finish), `default/upstream.toml` is the policy (what to follow, the fork-owned paths, what to decline), and `.upstream/ledger.tsv` records every upstream change taken or declined, and why. An agent following [`agents/skills/upstream-sync.md`](agents/skills/upstream-sync.md) makes the calls, daily via `.github/workflows/upstream-sync.yml` (on when the repo variable `UPSTREAM_SYNC_ENABLED` is `true`), and opens one pull request that a person merges.
+
+Source stays in upstream's naming so syncs stay mergeable; `bin/rebrand` applies the brand to builds. Don't run `bin/rebrand --apply` on the tree.
 
 # Style
 

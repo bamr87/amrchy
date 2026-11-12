@@ -1,0 +1,3 @@
+# The upstream sync ledger: every upstream change this fork took or declined, and why.
+# Written by `bin/upstream-sync finish`; one tab-separated line per change.
+# date	upstream	decision	subject	reason
