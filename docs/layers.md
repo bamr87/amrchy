@@ -39,4 +39,4 @@ Layers run in name order. Each script is sourced by `bash -eE` in its own proces
 
 ## Ownership
 
-`install/post-install/layers.sh`, `install/user/layers.sh`, this page and `test/shell.d/layers-test.sh` are this fork's own (`default/upstream.toml` lists them). The two `run_logged` lines at the end of `install/post-install/all.sh` and `install/user/all.sh` are the only edits to upstream files; an upstream sync keeps them last.
+`install/post-install/layers.sh`, `install/user/layers.sh`, this page and `test/shell.d/layers-test.sh` are this fork's own (`default/upstream.toml` lists them). The edits to upstream files are three: the two `run_logged` lines at the end of `install/post-install/all.sh` and `install/user/all.sh`, and the allowance in `test/shell.d/hardware-quirks-test.sh` that lets `user/layers.sh` follow `user/platform-setup.sh`, which upstream asserts is the last user step. An upstream sync keeps the two lines last and the allowance in place.

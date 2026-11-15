@@ -36,8 +36,13 @@ while read -r leaf; do
   grep -Fxq "$leaf" <<<"$dispatched" || fail "install/$leaf runs during setup" "its all.sh does not run it"
 done < <(find "$ROOT/install/config" "$ROOT/install/user" -maxdepth 1 -name '*.sh' ! -name all.sh | sort)
 # Platform packages hook in after everything Omarchy sets up for the user.
-[[ $(tail -n1 <<<"$dispatched") == "user/platform-setup.sh" ]] ||
-  fail "platform setup runs last" "last: $(tail -n1 <<<"$dispatched")"
+# amrchy: a product's layers (docs/layers.md) build on the finished setup, so
+# user/layers.sh runs after platform setup and is the one step allowed to
+# follow it.
+last=$(tail -n1 <<<"$dispatched")
+[[ $last != "user/layers.sh" ]] || last=$(tail -n2 <<<"$dispatched" | head -n1)
+[[ $last == "user/platform-setup.sh" ]] ||
+  fail "platform setup runs last" "last: $last"
 pass "every setup script is reached from setup"
 
 # --- Each quirk is a no-op on other hardware and applies on its own ---
